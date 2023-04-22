@@ -1,31 +1,23 @@
 function photographerFactory(data) {
-    const { name, portrait, city, country, tagline, cost} = data;
+  const { name, portrait, city, country, tagline, price: cost } = data;
 
-    const picture = `assets/photographers/${portrait}`;
+  const picture = `assets/photographers/${portrait}`;
 
-    function getUserCardDOM() {
-        const article = document.createElement( 'article' );
-        const img = document.createElement( 'img' );
-        img.setAttribute("src", picture)
-        const h2 = document.createElement( 'h2' );
-        const location = document.createElement( 'p' );
-        const description = document.createElement( 'p' );
-        const price = document.createElement( 'p' );
-        const div = document.createElement( 'div' );
-        h2.textContent = name;
-        location.textContent = city + ', ' + country;
-        location.classList.add('location');
-        description.textContent = tagline;
-        description.classList.add('description');
-        price.textContent = cost + '€/jour';
-        price.classList.add('price');
-        div.appendChild(location);
-        div.appendChild(description);
-        div.appendChild(price);
-        article.appendChild(img);
-        article.appendChild(h2);
-        article.appendChild(div);
-        return (article);
-    }
-    return { name, picture, getUserCardDOM }
+  function getUserCardDOM() {
+    const article = ` 
+            <article>
+                <a href='photographer.html?id=${data.id}'>
+                    <img src='${picture}' alt='${name}'>
+                    <h2>${name}</h2>
+                </a>
+                <div>
+                    <p class='location'>${city}, ${country}</p>
+                    <p class='description'>${tagline}</p>
+                    <p class='price'>${cost}€/jour</p>
+                </div>
+            </article>
+        `;
+    return article;
+  }
+  return { name, picture, getUserCardDOM };
 }

@@ -40,6 +40,17 @@ h1 {
     white-space: nowrap;
 }
 
+.photographer_section article a {
+    text-decoration: none;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    white-space: nowrap;
+    color: #901C1C;
+}
+
 .photographer_section article h2 {
     color: #D3573C;
     font-size: 36px;
