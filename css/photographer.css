@@ -74,3 +74,91 @@ form input {
     border: none;
     border-radius: 5px;
 }
+
+.photograph-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.photograph-header img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.photograph-header h2 {
+    font-size: 64px;
+    font-weight: 400;
+    color: #D3573C;
+    ;
+}
+.photograph-header .info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.photograph-header .info .city {
+    font-size: 24px;
+    font-weight: 400;
+    color: #901C1C;
+    margin: 0;
+}
+
+.photograph-header .info .tagline {
+    font-size: 18px;
+    font-weight: 400;
+    color: #525252;
+    margin: 19px 0 0 0 ;
+
+}
+
+.list-image {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 40px 100px;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+.list-image article {
+    margin-bottom: 30px;
+}
+
+.list-image img, video {
+    width: 350px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.info p, h2{
+    margin: 0;
+}
+
+.info h2 {
+    font-size: 24px;
+    font-weight: 400;
+    color: #901C1C;
+}
+
+.info .like {
+    display: flex;
+    align-items: center;
+}
+
+.info .like i{
+    color: #901C1C;
+    margin-left: 3px;
+}

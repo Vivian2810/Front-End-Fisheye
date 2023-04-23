@@ -18,28 +18,62 @@ async function getPhotographer() {
   };
 }
 
+async function displayPhotographer(photographer) {
+  const { name, city, country, tagline, price, portrait } = photographer;
+  const photographerSection = document.querySelector(".photograph-header");
+  const photographInfo = document.createElement("div");
+  const photographImg = document.createElement("img");
+  photographInfo.classList.add("photograph-info");
+  photographImg.src = `assets/photographers/${portrait}`;
+  photographImg.alt = name;
+  photographInfo.innerHTML = `
+    <h2>${name}</h2>
+    <div class="info">
+      <p class="city">${city}, ${country}</p>
+      <p class="tagline">${tagline}</p>
+    </div>
+  `;
+  photographerSection.prepend(photographInfo);
+  photographerSection.append(photographImg);
+}
+
 async function displayPhoto(media, photographer) {
   photographer_name = photographer.name.split(" ")[0].split("-")[0];
   const listImage = document.querySelector(".list-image");
   console.log(listImage);
   media.forEach((m) => {
-    const { image, title, likes, date, price } = m
-    const article = `
-    <article>
-      <img src="assets/images/${photographer_name}/${image}" alt="${title}">
-      <div class="info">
-        <h2>${title}</h2>
-        <div class="like">
-          <p>${likes}</p>
-          <i class="fas fa-heart"></i>
-        </div>
-      </div>
-      <div class="price">
-        <p>${price}€</p>
-      </div>
-    </article>
-  `;
-    console.log(article);
+    const { video, image, title, likes, date, price } = m;
+    let article = "";
+    if (video) {
+      article = `
+        <article>
+          <video controls>
+            <source src="assets/images/${photographer_name}/${video}" type="video/mp4">
+          </video>
+          <div class="info">
+            <h2>${title}</h2>
+            <div class="like">
+              <p>${likes}</p>
+              <i class="fas fa-heart"></i>
+            </div>
+          </div>
+        </article>
+      `;
+    } else {
+      article = `
+        <article>
+          <img src="assets/images/${photographer_name}/${image}" alt="${title}">
+          <div class="info">
+            <h2>${title}</h2>
+            <div class="like">
+              <p>${likes}</p>
+              <i class="fas fa-heart"></i>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+    // console.log(article);
     listImage.innerHTML += article;
   });
 }
@@ -47,6 +81,7 @@ async function displayPhoto(media, photographer) {
 async function init() {
   const { photographer, medias } = await getPhotographer();
   console.log(medias);
+  displayPhotographer(photographer);
   displayPhoto(medias, photographer);
 }
 
