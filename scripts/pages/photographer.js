@@ -1,5 +1,7 @@
 //Mettre le code JavaScript lié à la page photographer.html
 
+const logo = document.querySelector(".logo");
+
 async function getPhotographer() {
   const id = window.location.search.split("=")[1];
   const dataJson = await fetch("/data/photographers.json").then((Response) =>
@@ -40,42 +42,58 @@ async function displayPhotographer(photographer) {
 async function displayPhoto(media, photographer) {
   photographer_name = photographer.name.split(" ")[0].split("-")[0];
   const listImage = document.querySelector(".list-image");
-  console.log(listImage);
   media.forEach((m) => {
-    const { video, image, title, likes, date, price } = m;
+    const { video, image, title, likes, id, price } = m;
     let article = "";
+    let count = likes;
     if (video) {
       article = `
-        <article>
+        <article id="${id}">
           <video controls>
             <source src="assets/images/${photographer_name}/${video}" type="video/mp4">
           </video>
           <div class="info">
             <h2>${title}</h2>
             <div class="like">
-              <p>${likes}</p>
+              <p>${count}</p>
               <i class="fas fa-heart"></i>
             </div>
           </div>
         </article>
-      `;
+        `;
     } else {
       article = `
-        <article>
+        <article id="${id}">
           <img src="assets/images/${photographer_name}/${image}" alt="${title}">
           <div class="info">
             <h2>${title}</h2>
             <div class="like">
-              <p>${likes}</p>
+              <p>${count}</p>
               <i class="fas fa-heart"></i>
             </div>
           </div>
         </article>
-      `;
+        `;
     }
-    // console.log(article);
     listImage.innerHTML += article;
+        
+    document.querySelector(".like").addEventListener("click", (heart) => {
+      if (heart.target.classList.contains("fas")) {
+        count--;
+        heart.target.classList.remove("fas");
+        heart.target.classList.add("far");
+        // cardsMediaCompteurLike.textContent = media.likes;
+        // displayInfo();
+      } else {
+        count++;
+        heart.target.classList.remove("far");
+        heart.target.classList.add("fas");
+        // cardsMediaCompteurLike.textContent = media.likes;
+        // displayInfo();
+      }
+    });
   });
+  // console.log(article);
 }
 
 async function init() {
@@ -86,3 +104,7 @@ async function init() {
 }
 
 init();
+
+logo.addEventListener("click", () => {
+  window.location.href = "index.html";
+});
