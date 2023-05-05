@@ -77,7 +77,7 @@ async function displayPhoto(media, photographer) {
     }
     listImage.innerHTML += article;
         
-    document.querySelector(".like").addEventListener("click", (heart) => {
+    document.querySelectorAll(".like").addEventListener("click", (heart) => {
       if (heart.target.classList.contains("fas")) {
         count--;
         heart.target.classList.remove("fas");
