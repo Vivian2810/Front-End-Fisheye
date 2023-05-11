@@ -163,6 +163,36 @@ form input {
     margin-left: 3px;
 }
 
+.info .like .liked {
+    color: #901C1C;
+    font-size: larger;
+}
+
+.total-likes {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    right: 36px;
+    background-color: #DB8876;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 20px 34px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.total-likes .like {
+    display: flex;
+    align-items: center;
+    margin-right: 60px;
+}
+
+.total-likes  p {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 500;
+    margin-right: 5px;
+}
 
 .filter {
     display: none;
