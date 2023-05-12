@@ -49,41 +49,29 @@ async function displayPhoto(media, photographer) {
     let article = "";
     let count = likes;
     totalLikes += likes;
-    if (video) {
-      article = `
-        <article id="${id}">
-          <video controls>
-            <source src="assets/images/${photographer_name}/${video}" type="video/mp4">
-          </video>
-          <div class="info">
-            <h2>${title}</h2>
-            <div class="like" id="${id}">
-              <p>${count}</p>
-              <i class="far fa-heart"></i>
-            </div>
+    article =
+      `<article id="${id}">` +
+      (video
+        ? `<video controls>
+          <source src="assets/images/${photographer_name}/${video}" type="video/mp4">
+        </video>`
+        : `<img src="assets/images/${photographer_name}/${image}" alt="${title}">`) +
+      `<div class="info">
+        <h2>${title}</h2>
+          <div class="like" id="${id}">
+            <p>${count}</p>
+            <i class="far fa-heart"></i>
           </div>
-        </article>
-        `;
-    } else {
-      article = `
-        <article id="${id}">
-          <img src="assets/images/${photographer_name}/${image}" alt="${title}">
-          <div class="info">
-            <h2>${title}</h2>
-            <div class="like">
-              <p>${count}</p>
-              <i class="far fa-heart"></i>
-            </div>
-          </div>
-        </article>
-        `;
-    }
+        </div>
+      </article>`;
     listImage.innerHTML += article;
     document.querySelectorAll(".like").forEach((e) => {
       e.addEventListener("click", () => {
         e.classList.toggle("liked");
         let count = parseInt(e.children[0].innerHTML);
-        e.classList.contains("liked") ? (count++, totalLikes++) : (count--, totalLikes--);
+        e.classList.contains("liked")
+          ? (count++, totalLikes++)
+          : (count--, totalLikes--);
         e.children[0].innerHTML = count;
         e.children[0].classList.remove("liked");
         e.children[1].classList.toggle("far");
