@@ -5,7 +5,7 @@ let totalLikes = 0;
 // fonction de récupération des données du photographe
 async function getPhotographer() {
   const id = window.location.search.split("=")[1];
-  const dataJson = await fetch("/data/photographers.json").then((Response) =>
+  const dataJson = await fetch("../../data/photographers.json").then((Response) =>
     Response.json()
   );
   const photographers = dataJson.photographers;
