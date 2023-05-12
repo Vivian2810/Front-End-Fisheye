@@ -52,10 +52,10 @@ async function displayPhoto(media, photographer) {
     article =
       `<article id="${id}">` +
       (video
-        ? `<video controls>
+        ? `<video class="media">
           <source src="assets/images/${photographer_name}/${video}" type="video/mp4">
         </video>`
-        : `<img src="assets/images/${photographer_name}/${image}" alt="${title}">`) +
+        : `<img class="media" src="assets/images/${photographer_name}/${image}" alt="${title}">`) +
       `<div class="info">
         <h2>${title}</h2>
           <div class="like" id="${id}">
@@ -96,12 +96,42 @@ function displayTotalLikes(totalLikes, photographer) {
   `;
 }
 
+function modalMedia(){
+  document.querySelectorAll(".media").forEach((e) => {
+    e.addEventListener("click", () => {
+      console.log(e, e.outerHTML);
+      const modal = document.querySelector(".modal-media");
+      modal.innerHTML = `
+        <div class="modal-content">
+          <i class="fa-solid fa-xmark close"></i>
+          <div class="modal-media-content">
+            <i class="fa-solid fa-chevron-left"></i>
+            <div>
+              ${e.outerHTML}
+              <p>${e.alt}</p>
+            </div> 
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </div>
+      `;
+      modal.style.display = "block";
+      document.querySelector(".close").addEventListener("click", () => {
+        console.log("close");
+        modal.style.display = "none";
+        console.log(modal.classList);
+      }
+      );
+    });
+  });
+}
+
 // fonction d'initialisation
 async function init() {
   const { photographer, medias } = await getPhotographer();
   displayPhotographer(photographer);
   displayPhoto(medias, photographer);
   displayTotalLikes(totalLikes, photographer);
+  modalMedia();
 }
 
 init();
