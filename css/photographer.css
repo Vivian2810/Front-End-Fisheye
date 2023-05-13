@@ -199,8 +199,10 @@ form input {
 }
 
 .modal-media{
+    display: none;
     position: fixed;
-    padding: 2% 20%;
+    z-index: 1;
+    padding: 100px;
     top: 0;
     left: 0;
     background: rgb(82, 82, 82, 0.5);
@@ -228,7 +230,7 @@ form input {
 }
 
 .modal-media-content img {
-    max-width: ;
+    max-width: 70% ;
     max-height: 70%;
     object-fit: cover;
     border-radius: 5px;

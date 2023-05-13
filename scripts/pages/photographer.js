@@ -5,7 +5,7 @@ let totalLikes = 0;
 // fonction de récupération des données du photographe
 async function getPhotographer() {
   const id = window.location.search.split("=")[1];
-  const dataJson = await fetch("../../data/photographers.json").then((Response) =>
+  const dataJson = await fetch("../../photographers.json").then((Response) =>
     Response.json()
   );
   const photographers = dataJson.photographers;
@@ -45,20 +45,18 @@ async function displayPhoto(media, photographer) {
   photographer_name = photographer.name.split(" ")[0].split("-")[0];
   const listImage = document.querySelector(".list-image");
   media.forEach((m) => {
-    const { video, image, title, likes, id, price } = m;
-    let article = "";
-    let count = likes;
-    totalLikes += likes;
-    article =
-      `<article id="${id}">` +
-      (video
+    let count = m.likes;
+    totalLikes += m.likes;
+    let article =
+      `<article id="${m.id}">` +
+      (m.video
         ? `<video class="media">
-          <source src="assets/images/${photographer_name}/${video}" type="video/mp4">
+          <source src="assets/images/${photographer_name}/${m.video}" type="video/mp4">
         </video>`
-        : `<img class="media" src="assets/images/${photographer_name}/${image}" alt="${title}">`) +
+        : `<img class="media" src="assets/images/${photographer_name}/${m.image}" alt="${m.title}">`) +
       `<div class="info">
-        <h2>${title}</h2>
-          <div class="like" id="${id}">
+        <h2>${m.title}</h2>
+          <div class="like" id="${m.id}">
             <p>${count}</p>
             <i class="far fa-heart"></i>
           </div>
@@ -74,8 +72,7 @@ async function displayPhoto(media, photographer) {
           : (count--, totalLikes--);
         e.children[0].innerHTML = count;
         e.children[0].classList.remove("liked");
-        e.children[1].classList.toggle("far");
-        e.children[1].classList.toggle("fas");
+        ['far', 'fas'].forEach((c) => e.children[1].classList.toggle(c));
         displayTotalLikes(totalLikes, photographer);
       });
     });
