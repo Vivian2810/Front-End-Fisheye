@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 #contact_modal {
     display: none;
 }
@@ -75,7 +81,7 @@ form input {
     border-radius: 5px;
 }
 
-.photograph-header{
+.photograph-header {
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -94,6 +100,7 @@ form input {
     color: #D3573C;
     ;
 }
+
 .photograph-header .info {
     display: flex;
     flex-direction: column;
@@ -112,7 +119,7 @@ form input {
     font-size: 18px;
     font-weight: 400;
     color: #525252;
-    margin: 19px 0 0 0 ;
+    margin: 19px 0 0 0;
 
 }
 
@@ -122,14 +129,15 @@ form input {
     margin: 40px 100px;
     align-items: center;
     justify-content: space-between;
-    
+
 }
 
 .list-image article {
     margin-bottom: 30px;
 }
 
-.list-image img, video {
+.list-image img,
+video {
     width: 350px;
     height: 300px;
     object-fit: cover;
@@ -143,7 +151,8 @@ form input {
     margin: 10px 0;
 }
 
-.info p, h2{
+.info p,
+h2 {
     margin: 0;
 }
 
@@ -158,7 +167,7 @@ form input {
     align-items: center;
 }
 
-.info .like i{
+.info .like i {
     color: #901C1C;
     margin-left: 3px;
 }
@@ -187,7 +196,7 @@ form input {
     margin-right: 60px;
 }
 
-.total-likes  p {
+.total-likes p {
     margin: 0;
     font-size: 24px;
     font-weight: 500;
@@ -198,21 +207,27 @@ form input {
     display: none;
 }
 
-.modal-media{
+.modal-media {
     display: none;
     position: fixed;
+    vertical-align: middle;
     z-index: 1;
-    padding: 100px;
-    top: 0;
+    padding: 20px 100px;
     left: 0;
-    background: rgb(82, 82, 82, 0.5);
+    top: 0;
+    width: 100%;
     height: 100%;
+    overflow: auto;
+    background-color: white;
 }
 
-.modal-content{
+.modal-content {
     background-color: white;
+    align-items: center;
     text-align: right;
-    height: 90%;
+    margin: auto;
+    display: block;
+    max-height: 80vh;
 }
 
 .modal-content div {
@@ -221,7 +236,7 @@ form input {
     align-items: center;
 }
 
-.modal-media-content{
+.modal-media-content {
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -230,8 +245,7 @@ form input {
 }
 
 .modal-media-content img {
-    max-width: 70% ;
-    max-height: 70%;
+    max-height: 80vh;
     object-fit: cover;
     border-radius: 5px;
 }

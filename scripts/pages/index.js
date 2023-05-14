@@ -4,8 +4,6 @@ async function getPhotographers() {
   );
   const photographers = dataJson.photographers;
   const media = dataJson.media;
-  // fetch('/data/photographers.json ').then(Response => Response.json()).then(data => console.log(data));
-  // et bien retourner le tableau photographers seulement une fois récupéré
   return {
     photographers,
     media,
@@ -23,7 +21,6 @@ async function displayData(photographers) {
 }
 
 async function init() {
-  // Récupère les datas des photographes
   const { photographers } = await getPhotographers();
   displayData(photographers);
 }

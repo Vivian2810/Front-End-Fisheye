@@ -72,7 +72,7 @@ async function displayPhoto(media, photographer) {
           : (count--, totalLikes--);
         e.children[0].innerHTML = count;
         e.children[0].classList.remove("liked");
-        ['far', 'fas'].forEach((c) => e.children[1].classList.toggle(c));
+        ["far", "fas"].forEach((c) => e.children[1].classList.toggle(c));
         displayTotalLikes(totalLikes, photographer);
       });
     });
@@ -93,7 +93,7 @@ function displayTotalLikes(totalLikes, photographer) {
   `;
 }
 
-function modalMedia(){
+function modalMedia() {
   document.querySelectorAll(".media").forEach((e) => {
     e.addEventListener("click", () => {
       console.log(e, e.outerHTML);
@@ -116,10 +116,26 @@ function modalMedia(){
         console.log("close");
         modal.style.display = "none";
         console.log(modal.classList);
-      }
-      );
+      });
+      changeMedia();
     });
   });
+}
+
+function changeMedia() {
+  document.querySelectorAll(".fa-chevron-left").forEach((e) => {
+    e.addEventListener("click", () => {
+      console.log(e);
+      e = e.parentElement.previousSibling;
+    });
+  });
+  document.querySelectorAll(".fa-chevron-right").forEach((e) => {
+    e.addEventListener("click", () => {
+      console.log(e);
+      e = e.parentElement.nextSibling;
+    });
+  });
+  modalMedia()
 }
 
 // fonction d'initialisation
