@@ -1,5 +1,7 @@
 //Mettre le code JavaScript lié à la page photographer.html
 const logo = document.querySelector(".logo");
+const modal = document.querySelector(".modal-media");
+const modalContact = document.getElementById("contact_modal");
 let totalLikes = 0;
 
 // fonction de récupération des données du photographe
@@ -93,49 +95,92 @@ function displayTotalLikes(totalLikes, photographer) {
   `;
 }
 
-function modalMedia() {
-  document.querySelectorAll(".media").forEach((e) => {
-    e.addEventListener("click", () => {
-      console.log(e, e.outerHTML);
-      const modal = document.querySelector(".modal-media");
-      modal.innerHTML = `
-        <div class="modal-content">
-          <i class="fa-solid fa-xmark close"></i>
-          <div class="modal-media-content">
-            <i class="fa-solid fa-chevron-left"></i>
-            <div>
-              ${e.outerHTML}
-              <p>${e.alt}</p>
-            </div> 
-            <i class="fa-solid fa-chevron-right"></i>
-          </div>
-        </div>
-      `;
-      modal.style.display = "block";
-      document.querySelector(".close").addEventListener("click", () => {
-        console.log("close");
-        modal.style.display = "none";
-        console.log(modal.classList);
-      });
-      changeMedia();
-    });
+function modalMedia(e) {
+  modal.innerHTML = `
+  <div class="modal-content">
+    <i class="fa-solid fa-xmark close"></i>
+    <div class="modal-media-content">
+      <i class="fa-solid fa-chevron-left"></i>
+      <div>
+        ${e.outerHTML}
+      </div> 
+      <i class="fa-solid fa-chevron-right"></i>
+    </div>
+  </div>
+  `;
+  modal.style.display = "block";
+  document.querySelector(".close").addEventListener("click", () => {
+    modal.style.display = "none";
   });
+  changeMedia(e);
 }
 
-function changeMedia() {
+function changeMedia(element) {
   document.querySelectorAll(".fa-chevron-left").forEach((e) => {
     e.addEventListener("click", () => {
-      console.log(e);
-      e = e.parentElement.previousSibling;
+      modalMedia(element.previousSibling);
     });
   });
   document.querySelectorAll(".fa-chevron-right").forEach((e) => {
     e.addEventListener("click", () => {
-      console.log(e);
-      e = e.parentElement.nextSibling;
+      modalMedia(element.nextSibling);
     });
   });
-  modalMedia()
+}
+
+function displayFilter() {
+  const filter = document.querySelector(".filter");
+  console.log(filter);
+  filter.innerHTML = `
+    <div class="filter-content">
+      <h3>Trier par</h3>
+      <div name="filter" id="filter">
+        <div class="title">
+          <p value="popularite">Popularité</p>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div> 
+        <div class="list"> 
+          <p value="date">Date</option>
+          <p value="titre">Titre</p>
+        </div>
+      </div>
+      </select>
+    </div>
+  `;
+  document.getElementById("filter").addEventListener("click", () => {
+    deployFilter();
+  });
+  if (document.querySelector(".list").style.display === "block") {
+    document.querySelectorAll(".list p").forEach((e) => {
+      e.addEventListener("click", () => {
+        document.querySelector(".title p").innerHTML = e.innerHTML;
+        document.querySelector(".list").style.display = "none";
+        document.querySelector(".fa-chevron-down").style.rotate = "0deg";
+        if (e.value === "popularite") {
+          console.log("popularite");
+        }
+      });
+    });
+  }
+}
+
+function completModalContact() {
+  modalContact.childNodes[1].childNodes[3].innerHTML = `
+    <div>
+      <label>Prénom</label>
+      <input type="text" name="firstname" id="firstname" required>
+      <label>Nom</label>
+      <input type="text" name="name" id="name" required>
+      <label>Email</label>
+      <input type="email" name="email" id="email" required>
+      <label>Message</label>
+      <textarea name="message" id="message" cols="30" rows="10" required></textarea>
+    </div>
+    <button class="contact_button">Envoyer</button>
+  `;
+  document.querySelector(".contact_button").addEventListener("click", () => {
+    closeModal()
+  });
 }
 
 // fonction d'initialisation
@@ -144,7 +189,24 @@ async function init() {
   displayPhotographer(photographer);
   displayPhoto(medias, photographer);
   displayTotalLikes(totalLikes, photographer);
-  modalMedia();
+  completModalContact();
+  displayFilter();
+  document.querySelectorAll(".media").forEach((e) => {
+    e.addEventListener("click", () => {
+      modalMedia(e.parentElement);
+    });
+  });
+}
+
+function deployFilter() {
+  document.querySelector(".list").style.display =
+    document.querySelector(".list").style.display === "block"
+      ? "none"
+      : "block";
+  document.querySelector(".fa-chevron-down").style.rotate =
+    document.querySelector(".fa-chevron-down").style.rotate === "180deg"
+      ? "0deg"
+      : "180deg";
 }
 
 init();

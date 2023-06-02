@@ -236,6 +236,12 @@ h2 {
     align-items: center;
 }
 
+.modal-content .close, .fa-chevron-left, .fa-chevron-right {
+    font-size: 48px;
+    color: #901C1C;
+    cursor: pointer;
+}
+
 .modal-media-content {
     display: flex;
     align-items: center;
@@ -256,6 +262,12 @@ h2 {
     max-height: 100%;
 }
 
+.media i {
+    font-size: 40px;
+    color: #901C1C;
+    cursor: pointer;
+}
+
 @media screen and (min-width: 42.5rem) {
     .filter {
         display: -webkit-box;
@@ -274,63 +286,48 @@ h2 {
         margin: 0 0 0 100px;
     }
 
-    .filter span {
-        margin-right: 2rem;
-        font-size: 20px;
-    }
-
-    .filter h3 {
+    .filter-content h3 {
         margin-right: 2rem;
         font-size: 20px;
     }
 }
 
-.filter-select {
-    position: relative;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
+.filter-content{
+    margin-top: 9px ;
+    display : flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.filter-select__trigger {
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    padding: 11px;
-    width: 170px;
-    border: none;
+.filter-content .list{
+    display: none;
+}
+
+#filter {
     background-color: #901C1C;
+    color: white;
+    border: none;
+    padding: 0 18px;
+    font-weight: 700;
+    font-family: "DM Sans", sans-serif;
     border-radius: 5px;
+}
+
+#filter .title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#filter .title p{
+    margin: 0;
+    font-size: 18px;
+    padding: 14px 12px 14px 0;
     cursor: pointer;
 }
 
-.filter-options-container {
-    position: absolute;
-    display: block;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: #901c1c;
-    -webkit-transition: all 0.5s;
-    transition: all 0.5s;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    z-index: 2;
-    border-bottom-left-radius: 0.6rem;
-    border-bottom-right-radius: 0.6rem;
-}
-
-.filter-select.open .filter-options-container {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: all;
-}
-
-.filter-select.open .filter-select__trigger {
-    border-bottom-left-radius: 0;
+#filter .list p {
+    padding: 14px 0;
+    border-top: 1px solid white;
+    cursor: pointer;
 }
