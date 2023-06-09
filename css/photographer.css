@@ -236,7 +236,9 @@ h2 {
     align-items: center;
 }
 
-.modal-content .close, .fa-chevron-left, .fa-chevron-right {
+.modal-content .close,
+.fa-chevron-left,
+.fa-chevron-right {
     font-size: 48px;
     color: #901C1C;
     cursor: pointer;
@@ -268,6 +270,10 @@ h2 {
     cursor: pointer;
 }
 
+.filter {
+    display: none;
+}
+
 @media screen and (min-width: 42.5rem) {
     .filter {
         display: -webkit-box;
@@ -283,13 +289,116 @@ h2 {
         -webkit-box-pack: start;
         -ms-flex-pack: start;
         justify-content: start;
-        margin: 0 0 0 100px;
+        margin: 3rem 100px;
+        font-weight: 500;
     }
 
-    .filter-content h3 {
+    .filter a span {
         margin-right: 2rem;
         font-size: 20px;
+        font-weight: bold;
     }
+
+    .filter h3 {
+        margin-right: 2rem;
+        font-size: 18px;
+    }
+    
+    .filter a {
+        text-decoration: none;
+    }
+}
+
+/* .dropdownMenu {
+    width: ;
+} */
+
+.filter-select {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.filter-select__trigger {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    padding: 0 2.2rem;
+    font-size: 18px;
+    font-weight: 300;
+    color: white;
+    height: 3rem;
+    line-height: 6rem;
+    background: #901c1c;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.filter-options-container {
+    position: absolute;
+    display: block;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #901c1c;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 2;
+    border-bottom-left-radius: 0.6rem;
+    border-bottom-right-radius: 0.6rem;
+}
+
+.filter-select.open .filter-options-container {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
+
+.filter-select.open .filter-select__trigger {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.filter-option {
+    position: relative;
+    display: block;
+    margin: 0 2rem 0;
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+    line-height: 3rem;
+    cursor: pointer;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.filter-option:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.filter-option.selected {
+    display: none;
+}
+
+.filter-option:not(.selected) {
+    border-top: solid 0.1rem white;
 }
 
 .filter-content{
@@ -297,37 +406,4 @@ h2 {
     display : flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.filter-content .list{
-    display: none;
-}
-
-#filter {
-    background-color: #901C1C;
-    color: white;
-    border: none;
-    padding: 0 18px;
-    font-weight: 700;
-    font-family: "DM Sans", sans-serif;
-    border-radius: 5px;
-}
-
-#filter .title{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-#filter .title p{
-    margin: 0;
-    font-size: 18px;
-    padding: 14px 12px 14px 0;
-    cursor: pointer;
-}
-
-#filter .list p {
-    padding: 14px 0;
-    border-top: 1px solid white;
-    cursor: pointer;
 }

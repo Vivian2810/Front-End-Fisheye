@@ -1,13 +1,25 @@
+
 async function getPhotographers() {
-  const dataJson = await fetch("../../photographers.json").then((Response) =>
-    Response.json()
+  // document.querySelector(".loader").style.display = "block";
+  const dataJson = await fetch("/data/photographers.json").then(
+    (Response) => Response.json()
   );
   const photographers = dataJson.photographers;
   const media = dataJson.media;
+  // document.querySelector(".loader").style.display = "none";
   return {
     photographers,
     media,
   };
+
+}
+
+function displayLoading() {
+  document.querySelector(".loader").style.display = "block";
+  // to stop loading after some time
+  setTimeout(() => {
+    document.querySelector(".loader").style.display = "none";
+  }, 2000);
 }
 
 async function displayData(photographers) {
@@ -21,6 +33,7 @@ async function displayData(photographers) {
 }
 
 async function init() {
+  displayLoading();
   const { photographers } = await getPhotographers();
   displayData(photographers);
 }
