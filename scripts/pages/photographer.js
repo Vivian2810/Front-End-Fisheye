@@ -6,27 +6,23 @@ const photographer = {};
 const medias = [];
 let totalLikes = 0;
 
-function displayLoading() {
-  document.querySelector(".loader").style.display = "block";
-  // to stop loading after some time
-  setTimeout(() => {
-    document.querySelector(".loader").style.display = "none";
-  }, 2000);
-}
-
 // fonction de récupération des données du photographe
 async function getPhotographer() {
-  displayLoading();
+  document.querySelector(".loader").style.display = "block";
+  // to stop loading after some time
   const id = window.location.search.split("=")[1];
-  const dataJson = await fetch("data/photographers.json").then(
-    (Response) => Response.json()
-    )
+  const dataJson = await fetch("data/photographers.json").then((Response) =>
+    Response.json()
+  );
   const photographers = dataJson.photographers;
   const media = dataJson.media;
   const photographer = photographers.find(
     (photographer) => photographer.id == id
   );
   const medias = media.filter((media) => media.photographerId == id);
+  setTimeout(() => {
+    document.querySelector(".loader").style.display = "none";
+  }, 2000);
   return {
     photographer,
     medias,
@@ -171,7 +167,6 @@ function displayFilter() {
     ".filter-select a:first-child"
   );
   //selection du dernier enfant de l'element filter select
-
   const lastFilterOption = document.querySelector(
     ".filter-select a:last-child"
   );
@@ -185,7 +180,6 @@ function displayFilter() {
         const selected = this.parentNode.querySelector(
           ".filter-option.selected"
         );
-
         selected.classList.remove("selected");
         this.classList.add("selected");
         this.setAttribute("aria-selected", "true");
@@ -196,7 +190,6 @@ function displayFilter() {
         ).textContent = this.textContent;
         displayDropdown(false);
         filterMedia(this.textContent.toLowerCase());
-        // displayPhoto();
       }
     });
   }
@@ -266,35 +259,22 @@ function completModalContact() {
 }
 
 function filterMedia(type) {
-  let filtertype = "";
-  switch (type) {
-    case "popularité":
-      this.medias.sort((a, b) => {
-        if (a.likes < b.likes) {
-          return 1;
-        }
-        if (a.likes > b.likes) {
-          return -1;
-        }
-        return 0;
-      });
-      break;
-    case "date":
-    case "titre":
-      filtertype = type === "date" ? "date" : "title";
-      this.medias.sort((a, b) => {
-        if (a[filtertype] < b[filtertype]) {
-          return -1;
-        }
-        if (a[filtertype] > b[filtertype]) {
-          return 1;
-        }
-        return 0;
-      });
-      break;
-    default:
-      break;
-  }
+  filtertype = type === "titre" ? "title" : type;
+  console.log(filtertype);
+  this.medias.sort((a, b) => {
+    if (
+      type === "popularité" ? a.likes < b.likes : a[filtertype] > b[filtertype]
+    ) {
+      console.log(a.likes);
+      return 1;
+    }
+    if (
+      type === "popularité" ? a.likes > b.likes : a[filtertype] < b[filtertype]
+    ) {
+      return -1;
+    }
+    return 0;
+  });
   displayPhoto(this.medias, this.photographer);
 }
 

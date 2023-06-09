@@ -339,10 +339,20 @@ h2 {
     font-weight: 300;
     color: white;
     height: 3rem;
-    line-height: 6rem;
+    text-align: center;
+    line-height: 2.5rem;
     background: #901c1c;
     cursor: pointer;
     border-radius: 5px;
+}
+
+.filter-select__trigger:hover {
+    background: #711212;
+    transition: all 0.5s;
+}
+
+.filter-select__trigger span{
+    height: 40px;
 }
 
 .filter-options-container {
@@ -369,8 +379,6 @@ h2 {
 }
 
 .filter-select.open .filter-select__trigger {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }

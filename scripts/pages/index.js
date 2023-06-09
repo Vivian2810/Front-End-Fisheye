@@ -14,17 +14,9 @@ async function getPhotographers() {
 
 }
 
-function displayLoading() {
-  document.querySelector(".loader").style.display = "block";
-  // to stop loading after some time
-  setTimeout(() => {
-    document.querySelector(".loader").style.display = "none";
-  }, 2000);
-}
-
 async function displayData(photographers) {
   const photographersSection = document.querySelector(".photographer_section");
-
+  
   photographers.forEach((photographer) => {
     const photographerModel = photographerFactory(photographer);
     const userCardDOM = photographerModel.getUserCardDOM();
@@ -33,9 +25,13 @@ async function displayData(photographers) {
 }
 
 async function init() {
+  document.querySelector(".loader").style.display = "block";
   displayLoading();
   const { photographers } = await getPhotographers();
   displayData(photographers);
+  setTimeout(() => {
+    document.querySelector(".loader").style.display = "none";
+  }, 2000);
 }
 
 init();
