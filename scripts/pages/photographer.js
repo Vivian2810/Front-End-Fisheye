@@ -160,35 +160,15 @@ function displayFilter() {
   `;
   const dropDownMenu = document.querySelector(".dropdownMenu ");
   const filterSelect = document.querySelector(".filter-select");
-  const filterSelectTrigger = document.querySelector(".filter-select__trigger");
   const filterOptions = document.querySelectorAll(".filter-option");
-  //selection du premier enfant de l'element filter select
-  const firstFilterOption = document.querySelector(
-    ".filter-select a:first-child"
-  );
-  //selection du dernier enfant de l'element filter select
-  const lastFilterOption = document.querySelector(
-    ".filter-select a:last-child"
-  );
-  // parcours le tableau filterOptions au click sur le menu dropdown
   for (const filter of filterOptions) {
     filter.addEventListener("click", function (e) {
       e.preventDefault();
-      // si un filtre ne contient pas la classe selected alors alors selection du premier parent du filtre qui contient la classe
-      // filterOptions.selected
       if (!this.classList.contains("selected")) {
-        const selected = this.parentNode.querySelector(
-          ".filter-option.selected"
-        );
-        selected.classList.remove("selected");
+        this.parentNode.querySelector(".filter-option.selected").classList.remove("selected");
         this.classList.add("selected");
         this.setAttribute("aria-selected", "true");
-        //  l'ancêtre le plus proche de l'élément filter-select __trigger span
-        // et remplace le texte (passe le filtre selectionner en haut de liste)
-        this.closest(".filter-select").querySelector(
-          ".filter-select__trigger span"
-        ).textContent = this.textContent;
-        displayDropdown(false);
+        this.closest(".filter-select").querySelector(".filter-select__trigger span").textContent = this.textContent;
         filterMedia(this.textContent.toLowerCase());
       }
     });
@@ -200,19 +180,6 @@ function displayFilter() {
     displayDropdown(
       filterSelect.classList.contains("open") === true ? false : true
     );
-  });
-
-  //
-  lastFilterOption.addEventListener("keydown", function (e) {
-    if (e.code === "Tab" && !e.shiftKey) {
-      displayDropdown(false);
-    }
-  });
-
-  firstFilterOption.addEventListener("keydown", function (e) {
-    if (e.code === "Tab" && e.shiftKey) {
-      displayDropdown(false);
-    }
   });
 
   window.addEventListener("click", function (e) {
@@ -233,7 +200,9 @@ function displayFilter() {
     open === true
       ? filterSelect.classList.add("open")
       : filterSelect.classList.remove("open");
-    filterSelectTrigger.setAttribute("aria-expanded", open);
+    document
+      .querySelector(".filter-select__trigger")
+      .setAttribute("aria-expanded", open);
     document.querySelector(".fa-chevron-down").style.rotate =
       open === true ? "180deg" : "0deg";
   }
@@ -253,9 +222,9 @@ function completModalContact() {
     </div>
     <button class="contact_button">Envoyer</button>
   `;
-  document.querySelector(".contact_button").addEventListener("click", () => {
-    closeModal();
-  });
+  // document.querySelector(".contact_button").addEventListener("click", () => {
+  //   closeModal();
+  // });
 }
 
 function filterMedia(type) {
@@ -276,6 +245,12 @@ function filterMedia(type) {
     return 0;
   });
   displayPhoto(this.medias, this.photographer);
+  document.querySelectorAll(".media").forEach((e) => {
+    e.addEventListener("click", () => {
+      console.log(e.parentElement);
+      modalMedia(e.parentElement);
+    });
+  });
 }
 
 // fonction d'initialisation
@@ -285,12 +260,14 @@ async function init() {
   this.photographer = photograph;
   this.medias = allmedias;
   displayPhotographer(this.photographer);
-  displayPhoto(this.medias, this.photographer);
+  filterMedia("date");
+  // displayPhoto(this.medias, this.photographer);
   displayTotalLikes(totalLikes, this.photographer);
   completModalContact();
   displayFilter();
   document.querySelectorAll(".media").forEach((e) => {
     e.addEventListener("click", () => {
+      console.log(e.parentElement);
       modalMedia(e.parentElement);
     });
   });

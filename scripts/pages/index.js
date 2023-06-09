@@ -6,7 +6,6 @@ async function getPhotographers() {
   );
   const photographers = dataJson.photographers;
   const media = dataJson.media;
-  // document.querySelector(".loader").style.display = "none";
   return {
     photographers,
     media,
@@ -26,7 +25,6 @@ async function displayData(photographers) {
 
 async function init() {
   document.querySelector(".loader").style.display = "block";
-  displayLoading();
   const { photographers } = await getPhotographers();
   displayData(photographers);
   setTimeout(() => {
