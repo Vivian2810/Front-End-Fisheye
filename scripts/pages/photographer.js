@@ -135,6 +135,13 @@ function changeMedia(element) {
       modalMedia(element.nextSibling);
     });
   });
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") {
+      modalMedia(element.previousSibling);
+    } else if (e.key === "ArrowRight") {
+      modalMedia(element.nextSibling);
+    }
+  });
 }
 
 function displayFilter() {
@@ -165,10 +172,14 @@ function displayFilter() {
     filter.addEventListener("click", function (e) {
       e.preventDefault();
       if (!this.classList.contains("selected")) {
-        this.parentNode.querySelector(".filter-option.selected").classList.remove("selected");
+        this.parentNode
+          .querySelector(".filter-option.selected")
+          .classList.remove("selected");
         this.classList.add("selected");
         this.setAttribute("aria-selected", "true");
-        this.closest(".filter-select").querySelector(".filter-select__trigger span").textContent = this.textContent;
+        this.closest(".filter-select").querySelector(
+          ".filter-select__trigger span"
+        ).textContent = this.textContent;
         filterMedia(this.textContent.toLowerCase());
       }
     });
@@ -209,6 +220,11 @@ function displayFilter() {
 }
 
 function completModalContact() {
+  window.removeEventListener("keydown", (e) => {
+    if (e.key === "KeyI") {
+      modalContact.style.display = "none";
+    }
+  });
   modalContact.childNodes[1].childNodes[3].innerHTML = `
     <div>
       <label>Prénom</label>
@@ -220,11 +236,17 @@ function completModalContact() {
       <label>Message</label>
       <textarea name="message" id="message" cols="30" rows="10" required></textarea>
     </div>
-    <button class="contact_button">Envoyer</button>
+    <button class="contact_valid_button contact_button">Envoyer</button>
   `;
-  // document.querySelector(".contact_button").addEventListener("click", () => {
-  //   closeModal();
-  // });
+  document.querySelector(".contact_valid_button").addEventListener("click", () => {
+    modalContact.childNodes[1].childNodes[3].innerHTML = `
+      <div class="contact_valid">
+        <h2>Merci !</h2>
+        <p>Votre message a bien été envoyé à ${this.photographer.name}</p>
+        <button class="contact_valid_button">Fermer</button>
+      </div>
+    `;
+  });
 }
 
 function filterMedia(type) {
@@ -261,13 +283,16 @@ async function init() {
   this.medias = allmedias;
   displayPhotographer(this.photographer);
   filterMedia("date");
-  // displayPhoto(this.medias, this.photographer);
   displayTotalLikes(totalLikes, this.photographer);
   completModalContact();
   displayFilter();
+  window.addEventListener("keydown", (key) => {
+    if (key.code === "KeyI" && modalContact.style.display === "none") {
+      modalMedia(document.querySelector(".media").parentElement);
+    }
+  });
   document.querySelectorAll(".media").forEach((e) => {
     e.addEventListener("click", () => {
-      console.log(e.parentElement);
       modalMedia(e.parentElement);
     });
   });
