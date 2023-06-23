@@ -136,9 +136,10 @@ function changeMedia(element) {
     });
   });
   window.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowLeft") {
+    console.log(e.key, element);
+    if (e.key === "ArrowLeft" && element.previousSibling) {
       modalMedia(element.previousSibling);
-    } else if (e.key === "ArrowRight") {
+    } else if (e.key === "ArrowRight" && element.nextSibling) {
       modalMedia(element.nextSibling);
     }
   });
@@ -238,15 +239,16 @@ function completModalContact() {
     </div>
     <button class="contact_valid_button contact_button">Envoyer</button>
   `;
-  document.querySelector(".contact_valid_button").addEventListener("click", () => {
-    modalContact.childNodes[1].childNodes[3].innerHTML = `
+  document
+    .querySelector(".contact_valid_button")
+    .addEventListener("click", () => {
+      modalContact.childNodes[1].childNodes[3].innerHTML = `
       <div class="contact_valid">
         <h2>Merci !</h2>
         <p>Votre message a bien été envoyé à ${this.photographer.name}</p>
-        <button class="contact_valid_button">Fermer</button>
       </div>
     `;
-  });
+    });
 }
 
 function filterMedia(type) {
