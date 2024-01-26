@@ -6,6 +6,8 @@ const photographer = {};
 const medias = [];
 let totalLikes = 0;
 
+// import { completModalContact } from "../utils/contactForm.js";
+
 // fonction de récupération des données du photographe
 async function getPhotographer() {
   document.querySelector(".loader").style.display = "block";
@@ -27,6 +29,38 @@ async function getPhotographer() {
     photographer,
     medias,
   };
+}
+
+// fonction d'initialisation de la modale de constact
+function completModalContact() {
+  window.removeEventListener("keydown", (e) => {
+    if (e.key === "KeyI") {
+      modalContact.style.display = "none";
+    }
+  });
+  modalContact.childNodes[1].childNodes[3].innerHTML = `
+    <div>
+      <label>Prénom</label>
+      <input type="text" name="firstname" id="firstname" required>
+      <label>Nom</label>
+      <input type="text" name="name" id="name" required>
+      <label>Email</label>
+      <input type="email" name="email" id="email" required>
+      <label>Message</label>
+      <textarea name="message" id="message" cols="30" rows="10" required></textarea>
+    </div>
+    <button class="contact_valid_button contact_button">Envoyer</button>
+  `;
+  document
+    .querySelector(".contact_valid_button")
+    .addEventListener("click", () => {
+      modalContact.childNodes[1].childNodes[3].innerHTML = `
+      <div class="contact_valid">
+        <h2>Merci !</h2>
+        <p>Votre message a bien été envoyé à ${this.photographer.name}</p>
+      </div>
+    `;
+    });
 }
 
 // fonction pour afficher les informations du photographe
@@ -128,23 +162,38 @@ function changeMedia(element) {
   document.querySelectorAll(".fa-chevron-left").forEach((e) => {
     e.addEventListener("click", () => {
       modalMedia(element.previousSibling);
+      console.log(element.previousSibling);
+      e.removeEventListener("click", () => {
+        modalMedia(element.previousSibling);
+      });
     });
   });
   document.querySelectorAll(".fa-chevron-right").forEach((e) => {
     e.addEventListener("click", () => {
       modalMedia(element.nextSibling);
+      console.log(element.nextSibling);
+      e.removeEventListener("click", () => {
+        modalMedia(element.nextSibling);
+      });
     });
   });
   window.addEventListener("keydown", (e) => {
-    console.log(e.key, element);
     if (e.key === "ArrowLeft" && element.previousSibling) {
       modalMedia(element.previousSibling);
     } else if (e.key === "ArrowRight" && element.nextSibling) {
       modalMedia(element.nextSibling);
     }
+    window.removeEventListener("keydown", (e) => {  
+      if (e.key === "ArrowLeft" && element.previousSibling) {
+        modalMedia(element.previousSibling);
+      } else if (e.key === "ArrowRight" && element.nextSibling) {
+        modalMedia(element.nextSibling);
+      }
+    });
   });
 }
 
+// fonction d'affichage des filtres
 function displayFilter() {
   const filter = document.querySelector(".filter");
   filter.innerHTML = `
@@ -220,45 +269,13 @@ function displayFilter() {
   }
 }
 
-function completModalContact() {
-  window.removeEventListener("keydown", (e) => {
-    if (e.key === "KeyI") {
-      modalContact.style.display = "none";
-    }
-  });
-  modalContact.childNodes[1].childNodes[3].innerHTML = `
-    <div>
-      <label>Prénom</label>
-      <input type="text" name="firstname" id="firstname" required>
-      <label>Nom</label>
-      <input type="text" name="name" id="name" required>
-      <label>Email</label>
-      <input type="email" name="email" id="email" required>
-      <label>Message</label>
-      <textarea name="message" id="message" cols="30" rows="10" required></textarea>
-    </div>
-    <button class="contact_valid_button contact_button">Envoyer</button>
-  `;
-  document
-    .querySelector(".contact_valid_button")
-    .addEventListener("click", () => {
-      modalContact.childNodes[1].childNodes[3].innerHTML = `
-      <div class="contact_valid">
-        <h2>Merci !</h2>
-        <p>Votre message a bien été envoyé à ${this.photographer.name}</p>
-      </div>
-    `;
-    });
-}
-
+// fonction de de filtre
 function filterMedia(type) {
   filtertype = type === "titre" ? "title" : type;
-  console.log(filtertype);
   this.medias.sort((a, b) => {
     if (
       type === "popularité" ? a.likes < b.likes : a[filtertype] > b[filtertype]
     ) {
-      console.log(a.likes);
       return 1;
     }
     if (
@@ -271,7 +288,6 @@ function filterMedia(type) {
   displayPhoto(this.medias, this.photographer);
   document.querySelectorAll(".media").forEach((e) => {
     e.addEventListener("click", () => {
-      console.log(e.parentElement);
       modalMedia(e.parentElement);
     });
   });
@@ -290,7 +306,7 @@ async function init() {
   displayFilter();
   window.addEventListener("keydown", (key) => {
     if (key.code === "KeyI" && modalContact.style.display === "none") {
-      modalMedia(document.querySelector(".media").parentElement);
+      completModalContact();
     }
   });
   document.querySelectorAll(".media").forEach((e) => {

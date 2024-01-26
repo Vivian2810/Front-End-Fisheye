@@ -58,6 +58,7 @@
 
 .modal header {
     justify-content: space-between;
+    width: 100%;
 }
 
 .modal header img {
@@ -240,6 +241,8 @@ h2 {
     display: none;
     position: fixed;
     vertical-align: middle;
+    justify-content: center;
+    align-items: center;
     z-index: 1;
     padding: 20px 100px;
     left: 0;
@@ -282,9 +285,19 @@ h2 {
 }
 
 .modal-media-content img {
-    max-height: 80vh;
+    width: 80vh;
     object-fit: cover;
     border-radius: 5px;
+    height: auto;
+    max-height: 80vh;
+}
+
+.modal-media-content video {
+    width: 80vh;
+    border-radius: 5px;
+    object-fit: cover;
+    height: auto;
+    max-height: 80vh;
 }
 
 .modal-media-content div {
