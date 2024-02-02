@@ -190,12 +190,9 @@ function displayFilter() {
                 <i class="fa-solid fa-chevron-down"></i>
             </a>
             <div class="filter-options-container" role="listbox" id="filter-options">
-                <a href="#" class="filter-option" data-value="popularite" aria-selected="false"
-                    aria-label="Trier par popularité" role="option">Popularité</a>
-                <a href="#" class="filter-option selected" data-value="date" aria-selected="true"
-                    aria-label="Trier par date" role="option">Date</a>
-                <a href="#" class="filter-option" data-value="titre" aria-selected="false"
-                    aria-label="Trier par titre" role="option">Titre</a>
+                <a href="#" class="filter-option" data-value="popularite" aria-selected="false" aria-label="Trier par popularité" role="option">Popularité</a>
+                <a href="#" class="filter-option selected" data-value="date" aria-selected="true" aria-label="Trier par date" role="option">Date</a>
+                <a href="#" class="filter-option" data-value="titre" aria-selected="false" aria-label="Trier par titre" role="option">Titre</a>
             </div>
         </div>
     </div>
@@ -207,9 +204,10 @@ function displayFilter() {
     filter.addEventListener("click", function (e) {
       e.preventDefault();
       if (!this.classList.contains("selected")) {
-        this.parentNode
-          .querySelector(".filter-option.selected")
-          .classList.remove("selected");
+        filterOptions.forEach((e) => {
+          e.classList.remove("selected");
+          e.setAttribute("aria-selected", "false");
+        });
         this.classList.add("selected");
         this.setAttribute("aria-selected", "true");
         this.closest(".filter-select").querySelector(
@@ -219,7 +217,7 @@ function displayFilter() {
       }
     });
   }
-
+  
   // au click sur le menu dropdown
   dropDownMenu.addEventListener("click", function (e) {
     e.preventDefault();
