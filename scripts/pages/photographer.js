@@ -143,11 +143,11 @@ function modalMedia(e) {
   <div class="modal-content">
     <i class="fa-solid fa-xmark close"></i>
     <div class="modal-media-content">
-      <i class="fa-solid fa-chevron-left"></i>
-      <div>
+      <i class="fa-solid chevron fa-chevron-left"></i>
+      <div class="content-modal">
         ${e.outerHTML}
       </div> 
-      <i class="fa-solid fa-chevron-right"></i>
+      <i class="fa-solid chevron fa-chevron-right"></i>
     </div>
   </div>
   `;
@@ -159,36 +159,21 @@ function modalMedia(e) {
 }
 
 function changeMedia(element) {
-  document.querySelectorAll(".fa-chevron-left").forEach((e) => {
+  console.log(document.querySelectorAll(".chevron"));
+  document.querySelectorAll(".chevron").forEach((e) => {
     e.addEventListener("click", () => {
-      modalMedia(element.previousSibling);
-      console.log(element.previousSibling);
-      e.removeEventListener("click", () => {
-        modalMedia(element.previousSibling);
-      });
+      modalMedia(
+        e.classList.contains("fa-chevron-left")
+          ? element.previousSibling
+          : element.nextSibling
+      );
     });
-  });
-  document.querySelectorAll(".fa-chevron-right").forEach((e) => {
-    e.addEventListener("click", () => {
-      modalMedia(element.nextSibling);
-      console.log(element.nextSibling);
-      e.removeEventListener("click", () => {
-        modalMedia(element.nextSibling);
-      });
-    });
-  });
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowLeft" && element.previousSibling) {
-      modalMedia(element.previousSibling);
-    } else if (e.key === "ArrowRight" && element.nextSibling) {
-      modalMedia(element.nextSibling);
-    }
-    window.removeEventListener("keydown", (e) => {  
-      if (e.key === "ArrowLeft" && element.previousSibling) {
-        modalMedia(element.previousSibling);
-      } else if (e.key === "ArrowRight" && element.nextSibling) {
-        modalMedia(element.nextSibling);
-      }
+    e.removeEventListener("click", () => {
+      modalMedia(
+        e.classList.contains("fa-chevron-left")
+          ? element.previousSibling
+          : element.nextSibling
+      );
     });
   });
 }
@@ -308,11 +293,6 @@ async function init() {
     if (key.code === "KeyI" && modalContact.style.display === "none") {
       completModalContact();
     }
-  });
-  document.querySelectorAll(".media").forEach((e) => {
-    e.addEventListener("click", () => {
-      modalMedia(e.parentElement);
-    });
   });
 }
 
