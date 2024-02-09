@@ -33,11 +33,6 @@ async function getPhotographer() {
 
 // fonction d'initialisation de la modale de constact
 function completModalContact() {
-  window.removeEventListener("keydown", (e) => {
-    if (e.key === "KeyI") {
-      modalContact.style.display = "none";
-    }
-  });
   modalContact.childNodes[1].childNodes[3].innerHTML = `
     <div>
       <label>Prénom</label>
@@ -84,15 +79,14 @@ async function displayPhotographer(photographer) {
 }
 
 // fonction pour afficher les photos et les vidéos
-async function displayPhoto(media, photographer, filter) {
+async function displayPhoto(media, photographer) {
   photographer_name = photographer.name.split(" ")[0].split("-")[0];
   const listImage = document.querySelector(".list-image");
-  listImage.innerHTML = "";
   totalLikes = 0;
   media.forEach((m) => {
     let count = m.likes;
     totalLikes += m.likes;
-    let article =
+    listImage.innerHTML +=
       `<article id="${m.id}">` +
       (m.video
         ? `<video class="media">
@@ -107,7 +101,6 @@ async function displayPhoto(media, photographer, filter) {
           </div>
         </div>
       </article>`;
-    listImage.innerHTML += article;
     document.querySelectorAll(".like").forEach((e) => {
       e.addEventListener("click", () => {
         e.classList.toggle("liked");
@@ -116,7 +109,6 @@ async function displayPhoto(media, photographer, filter) {
           ? (count++, totalLikes++)
           : (count--, totalLikes--);
         e.children[0].innerHTML = count;
-        e.children[0].classList.remove("liked");
         ["far", "fas"].forEach((c) => e.children[1].classList.toggle(c));
         displayTotalLikes(totalLikes, photographer);
       });
@@ -159,22 +151,24 @@ function modalMedia(e) {
 }
 
 function changeMedia(element) {
-  console.log(document.querySelectorAll(".chevron"));
+  
   document.querySelectorAll(".chevron").forEach((e) => {
-    e.addEventListener("click", () => {
-      modalMedia(
-        e.classList.contains("fa-chevron-left")
-          ? element.previousSibling
-          : element.nextSibling
-      );
-    });
-    e.removeEventListener("click", () => {
-      modalMedia(
-        e.classList.contains("fa-chevron-left")
-          ? element.previousSibling
-          : element.nextSibling
-      );
-    });
+    eventListner(
+      e,
+      e.classList.contains("fa-chevron-left")
+        ? element.previousSibling
+        : element.nextSibling,
+      "click"
+    );
+  });
+}
+
+function eventListner(e, element, event) {
+  e.addEventListener(event, () => {
+    console.log(element.nodeName);
+    if (element.nodeName === "ARTICLE") {
+      modalMedia(element);
+    }
   });
 }
 
@@ -217,19 +211,13 @@ function displayFilter() {
       }
     });
   }
-  
+
   // au click sur le menu dropdown
   dropDownMenu.addEventListener("click", function (e) {
     e.preventDefault();
     displayDropdown(
       filterSelect.classList.contains("open") === true ? false : true
     );
-  });
-
-  window.addEventListener("click", function (e) {
-    if (!filterSelect.contains(e.target)) {
-      displayDropdown(false);
-    }
   });
 
   window.addEventListener("keydown", function (e) {
@@ -287,11 +275,6 @@ async function init() {
   displayTotalLikes(totalLikes, this.photographer);
   completModalContact();
   displayFilter();
-  window.addEventListener("keydown", (key) => {
-    if (key.code === "KeyI" && modalContact.style.display === "none") {
-      completModalContact();
-    }
-  });
 }
 
 init();
