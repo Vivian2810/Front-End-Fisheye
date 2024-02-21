@@ -162,10 +162,10 @@ function changeMedia(element) {
   });
   window.addEventListener("keydown", (e) => {
     if (e.code === "ArrowLeft") {
-      modalMedia(element.previousSibling);
+      modalMedia(element.nextSibling);
     }
     if (e.code === "ArrowRight") {
-      modalMedia(element.nextSibling);
+      modalMedia(element.previousSibling);
     }
   });
 }

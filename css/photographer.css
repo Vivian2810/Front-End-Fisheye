@@ -284,6 +284,14 @@ h2 {
     width: 100%;
 }
 
+.content-modal img {
+    width: 100%;
+    /* object-fit: cover; */
+    border-radius: 5px;
+    height: auto;
+    /* max-height: 80vh; */
+}
+
 .modal-media-content img {
     width: 80vh;
     object-fit: cover;
@@ -362,6 +370,17 @@ h2 {
         justify-content: start;
         padding: 35px;
         margin: auto;
+    }
+
+}
+
+@media screen and (min-width: 20rem) {
+    .content-modal img {
+        width: 100%;
+        object-fit: cover;
+        border-radius: 5px;
+        height: auto;
+        max-height: 80vh;
     }
 }
 
