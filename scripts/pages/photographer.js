@@ -151,7 +151,6 @@ function modalMedia(e) {
 }
 
 function changeMedia(element) {
-  
   document.querySelectorAll(".chevron").forEach((e) => {
     eventListner(
       e,
@@ -161,11 +160,18 @@ function changeMedia(element) {
       "click"
     );
   });
+  window.addEventListener("keydown", (e) => {
+    if (e.code === "ArrowLeft") {
+      modalMedia(element.previousSibling);
+    }
+    if (e.code === "ArrowRight") {
+      modalMedia(element.nextSibling);
+    }
+  });
 }
 
 function eventListner(e, element, event) {
   e.addEventListener(event, () => {
-    console.log(element.nodeName);
     if (element.nodeName === "ARTICLE") {
       modalMedia(element);
     }
