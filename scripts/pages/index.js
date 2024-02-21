@@ -1,4 +1,4 @@
-
+// fonction de récupértaion des données des photographes
 async function getPhotographers() {
   // document.querySelector(".loader").style.display = "block";
   const dataJson = await fetch("/data/photographers.json").then(
@@ -13,6 +13,7 @@ async function getPhotographers() {
 
 }
 
+// fonction pour afficher les photographes
 async function displayData(photographers) {
   const photographersSection = document.querySelector(".photographer_section");
   
@@ -23,6 +24,7 @@ async function displayData(photographers) {
   });
 }
 
+// fonction d'initialisation de la page avec le loader
 async function init() {
   document.querySelector(".loader").style.display = "block";
   const { photographers } = await getPhotographers();

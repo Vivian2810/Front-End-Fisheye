@@ -6,12 +6,9 @@ const photographer = {};
 const medias = [];
 let totalLikes = 0;
 
-// import { completModalContact } from "../utils/contactForm.js";
-
 // fonction de récupération des données du photographe
 async function getPhotographer() {
   document.querySelector(".loader").style.display = "block";
-  // to stop loading after some time
   const id = window.location.search.split("=")[1];
   const dataJson = await fetch("data/photographers.json").then((Response) =>
     Response.json()
@@ -83,6 +80,7 @@ async function displayPhoto(media, photographer) {
   photographer_name = photographer.name.split(" ")[0].split("-")[0];
   const listImage = document.querySelector(".list-image");
   totalLikes = 0;
+  listImage.innerHTML = "";
   media.forEach((m) => {
     let count = m.likes;
     totalLikes += m.likes;
@@ -130,6 +128,7 @@ function displayTotalLikes(totalLikes, photographer) {
   `;
 }
 
+//fonction pour afficher les photos
 function modalMedia(e) {
   modal.innerHTML = `
   <div class="modal-content">
@@ -150,6 +149,7 @@ function modalMedia(e) {
   changeMedia(e);
 }
 
+// fonction pour changer de média
 function changeMedia(element) {
   document.querySelectorAll(".chevron").forEach((e) => {
     eventListner(
@@ -169,7 +169,7 @@ function changeMedia(element) {
     }
   });
 }
-
+// fonction de verification si il existe une image suivante ou précédente
 function eventListner(e, element, event) {
   e.addEventListener(event, () => {
     if (element.nodeName === "ARTICLE") {
