@@ -142,66 +142,55 @@ function displayFilter() {
   filter.innerHTML = `
     <h3 id="trierPar">Trier par </h3>
     <div class="dropdownMenu tooltip">
-    <span class="tooltiptext">F pour ouvrir</span>
-        <div class="filter-select">
-            <a href="#" role="button" class="filter-select__trigger">
-                <span>Date</span>
-                <i class="fa-solid fa-chevron-down"></i>
-            </a>
-            <div class="filter-options-container" role="listbox" id="filter-options">
-                <a href="#" class="filter-option" data-value="popularite" aria-selected="false" aria-label="Trier par popularité" role="option">Popularité</a>
-                <a href="#" class="filter-option selected" data-value="date" aria-selected="true" aria-label="Trier par date" role="option">Date</a>
-                <a href="#" class="filter-option" data-value="titre" aria-selected="false" aria-label="Trier par titre" role="option">Titre</a>
-            </div>
+      <span class="tooltiptext">F pour ouvrir</span>
+      <div class="filter-select">
+        <a href="#" role="button" class="filter-select__trigger">
+          <span>Date</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </a>
+        <div class="filter-options-container" role="listbox" id="filter-options">
+          <a href="#" class="filter-option" data-value="popularite" aria-selected="false" aria-label="Trier par popularité" role="option">Popularité</a>
+          <a href="#" class="filter-option selected" data-value="date" aria-selected="true" aria-label="Trier par date" role="option">Date</a>
+          <a href="#" class="filter-option" data-value="titre" aria-selected="false" aria-label="Trier par titre" role="option">Titre</a>
         </div>
+      </div>
     </div>
   `;
-  const dropDownMenu = document.querySelector(".dropdownMenu ");
+
   const filterSelect = document.querySelector(".filter-select");
   const filterOptions = document.querySelectorAll(".filter-option");
-  for (const filter of filterOptions) {
-    filter.addEventListener("click", function (e) {
+
+  filterOptions.forEach((option) => {
+    option.addEventListener("click", (e) => {
       e.preventDefault();
-      if (!this.classList.contains("selected")) {
-        filterOptions.forEach((e) => {
-          e.classList.remove("selected");
-          e.setAttribute("aria-selected", "false");
+      if (!option.classList.contains("selected")) {
+        filterOptions.forEach((opt) => {
+          opt.classList.remove("selected");
+          opt.setAttribute("aria-selected", "false");
         });
-        this.classList.add("selected");
-        this.setAttribute("aria-selected", "true");
-        this.closest(".filter-select").querySelector(
-          ".filter-select__trigger span"
-        ).textContent = this.textContent;
-        filterMedia(this.textContent.toLowerCase());
+        option.classList.add("selected");
+        option.setAttribute("aria-selected", "true");
+        filterSelect.querySelector(".filter-select__trigger span").textContent = option.textContent;
+        filterMedia(option.textContent.toLowerCase());
       }
     });
-  }
-
-  // au click sur le menu dropdown
-  dropDownMenu.addEventListener("click", function (e) {
-    e.preventDefault();
-    displayDropdown(
-      filterSelect.classList.contains("open") === true ? false : true
-    );
   });
 
-  window.addEventListener("keydown", function (e) {
+  document.querySelector(".dropdownMenu").addEventListener("click", (e) => {
+    e.preventDefault();
+    displayDropdown(!filterSelect.classList.contains("open"));
+  });
+
+  window.addEventListener("keydown", (e) => {
     if (e.code === "KeyF" && !contactModalIsOpen) {
-      displayDropdown(
-        filterSelect.classList.contains("open") === true ? false : true
-      );
+      displayDropdown(!filterSelect.classList.contains("open"));
     }
   });
 
   function displayDropdown(open) {
-    open === true
-      ? filterSelect.classList.add("open")
-      : filterSelect.classList.remove("open");
-    document
-      .querySelector(".filter-select__trigger")
-      .setAttribute("aria-expanded", open);
-    document.querySelector(".fa-chevron-down").style.rotate =
-      open === true ? "180deg" : "0deg";
+    filterSelect.classList.toggle("open", open);
+    document.querySelector(".filter-select__trigger").setAttribute("aria-expanded", open);
+    document.querySelector(".fa-chevron-down").style.transform = open ? "rotate(180deg)" : "rotate(0deg)";
   }
 }
 
