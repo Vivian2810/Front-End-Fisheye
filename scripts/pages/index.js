@@ -1,26 +1,21 @@
+import { getData } from "../utils/fetchData.js";
+import { Photographer } from "../models/Photographer.js";
+import { photographerFactory } from "../factories/photographer.js";
+
 // fonction de récupértaion des données des photographes
 async function getPhotographers() {
-  // document.querySelector(".loader").style.display = "block";
-  const dataJson = await fetch("/data/photographers.json").then(
-    (Response) => Response.json()
-  );
-  const photographers = dataJson.photographers;
-  const media = dataJson.media;
+  const data = await getData();
   return {
-    photographers,
-    media,
+    photographers: data.photographers.map((photographer) => new Photographer(photographer)),
+    media: data.media,
   };
-
 }
 
 // fonction pour afficher les photographes
 async function displayData(photographers) {
   const photographersSection = document.querySelector(".photographer_section");
-  
   photographers.forEach((photographer) => {
-    const photographerModel = photographerFactory(photographer);
-    const userCardDOM = photographerModel.getUserCardDOM();
-    photographersSection.innerHTML += userCardDOM;
+    photographersSection.innerHTML += photographerFactory(photographer).article;
   });
 }
 

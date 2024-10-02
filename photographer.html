@@ -19,7 +19,10 @@
   </header>
   <main id="main">
     <div class="photograph-header">
-      <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+      <div class="tooltip">
+        <span class="tooltiptext">C pour ouvrir</span>
+        <button class="contact_button contact_open_button">Contactez-moi</button>
+      </div>
     </div>
     <div class="filter">
     </div>
@@ -34,7 +37,7 @@
     <div class="modal">
       <header>
         <h2>Contactez-moi</h2>
-        <img src="./assets/icons/close.svg" onclick="closeModal()" />
+        <img class="contact_close" src="./assets/icons/close.svg" />
       </header>
       <form>
         <div>
@@ -45,8 +48,8 @@
       </form>
     </div>
   </div>
-  <script src="./scripts/pages/photographer.js"></script>
-  <script src="./scripts/utils/contactForm.js"></script>
+  <script type="module" src="./scripts/pages/photographer.js"></script>
+  <script type="module" src="./scripts/utils/contactForm.js"></script>
 </body>
 
 </html>
